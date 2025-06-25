@@ -73,3 +73,13 @@ cv-website/
 
 This project is licensed under the MIT License. See [LICENSE](https://github.com/HieuNguyen01/cv-website/blob/main/LICENSE) for details.
 
+---
+
+## 10. Contact
+
+Created by me
+
+📧 Email: hieunguyen5960@gmail.com
+
+🔗 LinkedIn: 
+
