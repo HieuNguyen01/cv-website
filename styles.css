@@ -1,0 +1,244 @@
+/*=============
+  VARIABLES & RESETS
+=============*/
+:root {
+  --main-green: #2a9d8f;
+  --text-black: #000;
+  --bg-light: #f0f0f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-black);
+  line-height: 1.5;
+  background: #fff;
+}
+
+.col-photo {
+  text-align: center;      /* center inline/block children */
+}
+.col-photo .headshot,
+.mobile-img .headshot {
+  display: block;          /* make margin auto work */
+  margin: 0 auto;          /* horizontally center */
+  width: 150px;
+  height: 150px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/*=============
+  TABLE LAYOUT
+=============*/
+#cv-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#cv-table td {
+  vertical-align: top;
+  padding: 1rem;
+}
+
+/* header & footer rows */
+.row-header td,
+.row-footer td {
+  background: var(--bg-light);
+  height: 50px;
+}
+
+/* headings */
+h1, h2, h3 {
+  color: var(--main-green);
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+/* text, paragraphs & lists */
+p {
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* nested tables */
+.nested-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.nested-table th,
+.nested-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* hobby icons */
+.icons {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.icons i {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+  color: var(--text-black);
+}
+
+/* justify profile text */
+.col-profile {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* desktop: fixed column widths */
+@media (min-width: 769px) {
+  #cv-table tr > td:first-child {
+    width: 21%;
+  }
+  #cv-table tr > td:nth-child(2) {
+    width: 15%;
+  }
+  #cv-table tr > td:nth-child(3) {
+    width: 54%;
+  }
+  #cv-table tr > td:nth-child(4) {
+    width: 10%;
+  }
+}
+
+/* bold highlights */
+.highlight-bold {
+  font-weight: bold;
+  color: var(--text-black);
+}
+
+/*=============
+  RESPONSIVE (MOBILE)
+=============*/
+@media (max-width: 768px) {
+  /* 1) Stack table into single-column blocks */
+  #cv-table,
+  #cv-table tr:not(.row-header):not(.row-footer),
+  #cv-table td {
+    display: block;
+    width: 100%;
+  }
+
+  /* 2) Simplify header & footer */
+  .row-header,
+  .row-footer {
+    display: block;
+    height: 40px;
+    background: var(--bg-light);
+  }
+  .row-header td,
+  .row-footer td {
+    display: none;
+  }
+
+  /* justify profile on mobile */
+  .mobile-profile {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+  /* 3) Wrap into a flex column */
+  .mobile-cv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 4) Order your mobile blocks */
+  .mobile-header       { order: 0; }
+  .mobile-img          { order: 1; }
+  .mobile-name         { order: 2; }
+  .mobile-title        { order: 3; }
+  .mobile-profile      { order: 4; }
+  .mobile-contact      { order: 5; }
+  .mobile-education    { order: 6; }
+  .mobile-experience   { order: 7; }
+  .mobile-projects     { order: 8; }
+  .mobile-skills       { order: 9; }
+  .mobile-languages    { order: 10; }
+  .mobile-courses      { order: 11; }
+  .mobile-certificates { order: 12; }
+  .mobile-software     { order: 13; }
+  .mobile-hobbies      { order: 14; }
+  .mobile-footer       { order: 15; }
+
+  /* 5) Ensure each mobile block fills container */
+  .mobile-cv > div {
+    padding: 1rem 0;
+    flex: 0 0 auto;   /* don’t grow or shrink */
+    min-width: 0;     /* allow it to get as narrow as its CSS width */
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* 6) Force nested tables to obey their wrapper & always scroll */
+  .mobile-cv .nested-table {
+    display: block;               /* block‐level for 100% width */
+    table-layout: fixed;          /* evenly divide columns */
+    width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;           /* always show horizontal scroll when needed */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 7) Break long words so table can shrink */
+  .mobile-cv .nested-table th,
+  .mobile-cv .nested-table td {
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  .mobile-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mobile-img .headshot {
+  max-width: 120px;    /* or whatever you like on mobile */
+  width: 100%;
+  height: auto;
+  display: block;
+}
+h1 {
+  text-align: center;
+}
+}
