@@ -6,7 +6,7 @@ A responsive, single-page website version of my CV, built using HTML, CSS, and v
 
 ## 2. Live Demo
 
-- 🌐 https://your-cv-site.netlify.app
+- 🌐 https://cv-hieu-400.netlify.app/
 ---
 
 ## 3. Features
