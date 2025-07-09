@@ -1,164 +1,137 @@
 // js/script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  const table = document.getElementById('cv-table')
+  const table = document.getElementById('cv-table');
+  const tabs  = document.querySelector('.tabs'); // ← must include the “.”
 
   function buildMobileView() {
-    if (document.querySelector('.mobile-cv')) return
+    if (document.querySelector('.mobile-cv')) return;
 
-    const mobile = document.createElement('div')
-    mobile.className = 'mobile-cv'
+    // create mobile wrapper
+    const mobile = document.createElement('div');
+    mobile.className = 'mobile-cv';
 
-    // 0. Header bar
-    const hdr = document.createElement('div')
-    hdr.className = 'mobile-header'
-    mobile.append(hdr)
+    // clone header/image/name/profile/contact
+    const hdr = document.createElement('div');
+    hdr.className = 'mobile-header';
+    mobile.append(hdr);
 
-    // 1. Image
-    const imgWrap = document.createElement('div')
-    imgWrap.className = 'mobile-img'
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'mobile-img';
     imgWrap.append(
       document.querySelector('.col-photo img').cloneNode(true)
-    )
-    mobile.append(imgWrap)
+    );
+    mobile.append(imgWrap);
 
-    // 2. Name
-    const nameWrap = document.createElement('div')
-    nameWrap.className = 'mobile-name'
+    const nameWrap = document.createElement('div');
+    nameWrap.className = 'mobile-name';
     nameWrap.append(
       document.querySelector('.col-name h1').cloneNode(true)
-    )
-    mobile.append(nameWrap)
+    );
+    mobile.append(nameWrap);
 
-    // 3. Title
-    const titleWrap = document.createElement('div')
-    titleWrap.className = 'mobile-title'
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'mobile-title';
     titleWrap.append(
       document.querySelector('.col-name h2').cloneNode(true)
-    )
-    mobile.append(titleWrap)
+    );
+    mobile.append(titleWrap);
 
-    // 4. Profile
-    const profileWrap = document.createElement('div')
-    profileWrap.className = 'mobile-profile'
+    const profileWrap = document.createElement('div');
+    profileWrap.className = 'mobile-profile';
     profileWrap.append(
       document.querySelector('.col-profile .profile').cloneNode(true)
-    )
-    mobile.append(profileWrap)
+    );
+    mobile.append(profileWrap);
 
-    // 5. Contact
-    const contactWrap = document.createElement('div')
-    contactWrap.className = 'mobile-contact'
+    const contactWrap = document.createElement('div');
+    contactWrap.className = 'mobile-contact';
     contactWrap.append(
       document.querySelector('.col-profile .contact').cloneNode(true)
-    )
-    mobile.append(contactWrap)
+    );
+    mobile.append(contactWrap);
 
-    // 6. Education
-    const eduWrap = document.createElement('div')
-    eduWrap.className = 'mobile-education'
-    eduWrap.append(
-      document.querySelector('.col-education h3').cloneNode(true),
-      document.querySelector('.col-education .nested-table').cloneNode(true)
-    )
-    mobile.append(eduWrap)
+    // inject the tabbed accordions now that mobile exists
+    if (tabs) {
+      const tabsClone = tabs.cloneNode(true);
+      tabsClone.classList.add('injected-tabs');
+      mobile.append(tabsClone);
+      tabs.style.display = 'none';  // hide original tabs container
+    }
 
-    // 7. Experience
-    const expWrap = document.createElement('div')
-    expWrap.className = 'mobile-experience'
-    expWrap.append(
-      document.querySelector('.col-experience h3').cloneNode(true),
-      document.querySelector('.col-experience .nested-table').cloneNode(true)
-    )
-    mobile.append(expWrap)
+    // whenever any <details> toggles…
+  document.body.addEventListener('toggle', e => {
+    const opened = e.target;
+    // only care about CV accordions
+    if (!opened.matches('.cv-accordion')) return;
 
-    // 8. Projects
-    const projWrap = document.createElement('div')
-    projWrap.className = 'mobile-projects'
-    projWrap.append(
-      document.querySelector('.col-projects h3').cloneNode(true),
-      document.querySelector('.col-projects .nested-table').cloneNode(true)
-    )
-    mobile.append(projWrap)
+    // if it just opened, close the rest
+    if (opened.open) {
+      document.querySelectorAll('.cv-accordion')
+        .forEach(acc => {
+          if (acc !== opened) acc.open = false;
+        })
+    }
+  }, /* useCapture */ true);
 
-    // 9. Skills
-    const skillWrap = document.createElement('div')
-    skillWrap.className = 'mobile-skills'
-    skillWrap.append(
-      document.querySelector('.col-skills h3').cloneNode(true),
-      document.querySelector('.col-skills ul').cloneNode(true)
-    )
-    mobile.append(skillWrap)
+    // clone the remaining blocks (skills, languages, etc.)
+    const cloneBlock = (selector, className) => {
+      const el = document.createElement('div');
+      el.className = className;
+      const src = document.querySelector(selector);
+      if (src) el.append(src.cloneNode(true));
+      mobile.append(el);
+    };
 
-    // 10. Languages
-    const langWrap = document.createElement('div')
-    langWrap.className = 'mobile-languages'
-    langWrap.append(
-      document.querySelector('.languages h3').cloneNode(true),
-      document.querySelector('.languages ul').cloneNode(true)
-    )
-    mobile.append(langWrap)
+    cloneBlock('.col-skills',    'mobile-skills');
+    cloneBlock('.languages',     'mobile-languages');
+    cloneBlock('.courses',       'mobile-courses');
+    cloneBlock('.col-certificates', 'mobile-certificates');
+    cloneBlock('.software',      'mobile-software');
+    cloneBlock('.hobbies',       'mobile-hobbies');
 
-    // 11. Courses
-    const courseWrap = document.createElement('div')
-    courseWrap.className = 'mobile-courses'
-    courseWrap.append(
-      document.querySelector('.courses h3').cloneNode(true),
-      document.querySelector('.courses ul').cloneNode(true)
-    )
-    mobile.append(courseWrap)
+    // footer bar
+    const ftr = document.createElement('div');
+    ftr.className = 'mobile-footer';
+    mobile.append(ftr);
 
-    // 12. Certificates
-    const certWrap = document.createElement('div')
-    certWrap.className = 'mobile-certificates'
-    certWrap.append(
-      document.querySelector('.col-certificates h3').cloneNode(true),
-      document.querySelector('.col-certificates ul').cloneNode(true)
-    )
-    mobile.append(certWrap)
-
-    // 13. Software
-    const softWrap = document.createElement('div')
-    softWrap.className = 'mobile-software'
-    softWrap.append(
-      document.querySelector('.software h3').cloneNode(true),
-      document.querySelector('.software ul').cloneNode(true)
-    )
-    mobile.append(softWrap)
-
-    // 14. Hobbies
-    const hobWrap = document.createElement('div')
-    hobWrap.className = 'mobile-hobbies'
-    hobWrap.append(
-      document.querySelector('.hobbies h3').cloneNode(true),
-      document.querySelector('.hobbies .icons').cloneNode(true)
-    )
-    mobile.append(hobWrap)
-
-    // 15. Footer bar
-    const ftr = document.createElement('div')
-    ftr.className = 'mobile-footer'
-    mobile.append(ftr)
-
-    // inject & hide original
-    document.body.insertBefore(mobile, table)
-    table.style.display = 'none'
-  }
+    // inject & hide original table
+    document.body.insertBefore(mobile, table);
+    table.style.display = 'none';
+  };
 
   function destroyMobileView() {
-    const mob = document.querySelector('.mobile-cv')
+    const mob = document.querySelector('.mobile-cv');
     if (mob) {
-      mob.remove()
-      table.style.display = ''
+      mob.remove();
+      table.style.display = '';
+      if (tabs) tabs.style.display = '';
     }
-  }
+  };
 
   function handleResize() {
-    if (window.innerWidth <= 768) buildMobileView()
-    else destroyMobileView()
-  }
+    if (window.innerWidth <= 768) buildMobileView();
+    else destroyMobileView();
+  };
 
-  // init
-  handleResize()
-  window.addEventListener('resize', handleResize)
-})
+  // init + watch
+  handleResize();
+  window.addEventListener('resize', handleResize);
+
+  // delegated tab switching
+  document.body.addEventListener('click', e => {
+  if (!e.target.matches('.tab-btn')) return;  // ignore clicks off tabs
+
+  // deactivate all tabs/panels
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.hidden = true);
+
+  // activate the clicked tab
+  e.target.classList.add('active');
+  document.getElementById(e.target.dataset.target).hidden = false;
+
+  // collapse all the accordions
+  document.querySelectorAll('.cv-accordion')
+    .forEach(acc => acc.open = false)
+  });
+});

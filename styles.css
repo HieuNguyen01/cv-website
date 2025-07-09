@@ -183,24 +183,6 @@ ul li {
     flex-direction: column;
   }
 
-  /* 4) Order your mobile blocks */
-  .mobile-header       { order: 0; }
-  .mobile-img          { order: 1; }
-  .mobile-name         { order: 2; }
-  .mobile-title        { order: 3; }
-  .mobile-profile      { order: 4; }
-  .mobile-contact      { order: 5; }
-  .mobile-education    { order: 6; }
-  .mobile-experience   { order: 7; }
-  .mobile-projects     { order: 8; }
-  .mobile-skills       { order: 9; }
-  .mobile-languages    { order: 10; }
-  .mobile-courses      { order: 11; }
-  .mobile-certificates { order: 12; }
-  .mobile-software     { order: 13; }
-  .mobile-hobbies      { order: 14; }
-  .mobile-footer       { order: 15; }
-
   /* 5) Ensure each mobile block fills container */
   .mobile-cv > div {
     padding: 1rem 0;
@@ -210,35 +192,138 @@ ul li {
     max-width: 100%;
   }
 
-  /* 6) Force nested tables to obey their wrapper & always scroll */
+  /* 4) Mobile blocks orders*/
+  /*———— order of flex items inside .mobile-cv ————*/
+  .mobile-header       { order: 1; }
+  .mobile-img          { order: 2; }
+  .mobile-name         { order: 3; }
+  .mobile-title        { order: 4; }
+  .mobile-profile      { order: 5; }
+  .mobile-contact      { order: 6; }
+  .injected-tabs       { order: 7; }  /*tabbed accordions */
+  .mobile-skills       { order: 8; }
+  .mobile-languages    { order: 9; }
+  .mobile-courses      { order: 10; }
+  .mobile-certificates { order: 11; }
+  .mobile-software     { order: 12; }
+  .mobile-hobbies      { order: 13; }
+  .mobile-footer       { order: 14; }
+
+  /* 6) Force nested tables to obey their wrapper & always scroll 
   .mobile-cv .nested-table {
-    display: block;               /* block‐level for 100% width */
-    table-layout: fixed;          /* evenly divide columns */
+    display: block;               /* block‐level for 100% width 
+    table-layout: fixed;          /* evenly divide columns 
     width: 100%;
     max-width: 100%;
-    overflow-x: scroll;           /* always show horizontal scroll when needed */
+    overflow-x: scroll;           /* always show horizontal scroll when needed 
     -webkit-overflow-scrolling: touch;
-  }
+  }*/
 
-  /* 7) Break long words so table can shrink */
+  /* 7) Break long words so table can shrink
   .mobile-cv .nested-table th,
   .mobile-cv .nested-table td {
     word-break: break-word;
     white-space: normal;
-  }
+  } */
 
   .mobile-img {
   display: flex;
   justify-content: center;
   align-items: center;
+  }
+  .mobile-img .headshot {
+    max-width: 120px;    /* or whatever you like on mobile */
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  h1,h2 {
+    text-align: center;
+  }
 }
-.mobile-img .headshot {
-  max-width: 120px;    /* or whatever you like on mobile */
-  width: 100%;
-  height: auto;
+
+/*=============
+  TABS & ACCORDIONS (mobile only)
+=============*/
+
+/* 1) Hide tabs on desktop; show only on narrow screens */
+.tabs {
+  display: none;
+  margin: 1rem 0;
+}
+@media (max-width: 768px) {
+  .tabs {
+    display: block;
+  }
+
+  /* 2) Hide the original table on mobile */
+  #cv-table {
+    display: none;
+  }
+}
+
+/* 3) Tab bar: horizontal scroll + underline */
+.tab-list {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--main-green);
+}
+.tab-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* 4) Tab buttons */
+.tab-btn {
+  flex: 0 0 auto;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-black);
+}
+.tab-btn.active {
+  color: var(--main-green);
+  border-bottom: 3px solid var(--main-green);
+}
+
+/* 5) Panels: show only the un-hidden one */
+.tab-panel {
+  display: none;
+  padding: 1rem 0;
+}
+.tab-panel:not([hidden]) {
   display: block;
 }
-h1 {
-  text-align: center;
+
+/*=============
+  ACCORDION STYLES
+=============*/
+.cv-accordion {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 0.75rem 0;
+  overflow: hidden;
 }
+.cv-accordion summary {
+  list-style: none;            /* remove default marker */
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  background: var(--bg-light);
+  font-weight: bold;
 }
+.cv-accordion summary::-webkit-details-marker {
+  display: none;               /* hide default arrow */
+}
+.cv-accordion[open] summary {
+  background: var(--main-green);
+  color: #fff;
+}
+.cv-accordion ul {
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  list-style: disc inside;
+  line-height: 1.4;
+}
+
+
